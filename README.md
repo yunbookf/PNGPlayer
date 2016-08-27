@@ -15,8 +15,8 @@ let pp: PNGPlayer = new PNGPlayer("#img", {
 图片像这样：  
 Pictures like this:  
   
-
-
+![PNG](https://github.com/yunbookf/PNGPlayer/raw/master/build/img.png)
+  
 需要指定 src 图片位置，和 style 设置宽高。  
 Need to specify the src images, and style sets the width and height.  
   
