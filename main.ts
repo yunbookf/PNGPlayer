@@ -1,7 +1,10 @@
 $(document).ready(function(e) {
     let pp: PNGPlayer = new PNGPlayer("#img", {
-        frames: 4
+        frames: 3
     });
+    pp.onFrame = function(f: number): void {
+        $("#frame").text(f.toString());
+    };
     $("#play").on("click", function(): void {
         pp.play();
     });
@@ -19,7 +22,7 @@ $(document).ready(function(e) {
         }
     });
     let pp2: PNGPlayer = new PNGPlayer("#img2", {
-        frames: 4,
+        frames: 3,
         size: "88px 61px"
     });
 });

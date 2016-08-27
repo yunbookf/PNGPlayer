@@ -15,6 +15,9 @@ var PNGPlayer = (function () {
         if (opts.size !== undefined) {
             dom.css("background-size", opts.size);
         }
+        if (opts.speed !== undefined) {
+            this._speed = opts.speed;
+        }
         this.dom = dom;
         this.play();
     }
@@ -35,6 +38,7 @@ var PNGPlayer = (function () {
         if (frame === void 0) { frame = this._posFrame; }
         if (this._playing === false) {
             this._playing = true;
+            this.onFrame(this._posFrame);
             var speed = this._speed[frame] ? this._speed[frame] : this._speed[0];
             this._posLeft = frame * this._width;
             this.dom.css({ "background-position": this._posLeft + "px " + this._posTop + "px" });
@@ -47,13 +51,14 @@ var PNGPlayer = (function () {
     PNGPlayer.prototype._play = function () {
         if (this._posFrame > this._frames)
             this._posFrame = 0;
+        this.onFrame(this._posFrame);
         var speed = this._speed[this._posFrame] ? this._speed[this._posFrame] : this._speed[0];
         this._posLeft = this._posFrame * this._width;
         this.dom.css({ "background-position": this._posLeft + "px " + this._posTop + "px" });
         ++this._posFrame;
         this._posTimer = setTimeout((function () {
             this._play();
-        }).bind(this), 100);
+        }).bind(this), speed);
     };
     PNGPlayer.prototype.stop = function () {
         if (this._playing === true) {
@@ -69,6 +74,8 @@ var PNGPlayer = (function () {
             this._playing = false;
         }
     };
+    PNGPlayer.prototype.onFrame = function (frame) { };
+    ;
     PNGPlayer.version = "0.1";
     return PNGPlayer;
 }());

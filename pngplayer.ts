@@ -43,6 +43,9 @@ class PNGPlayer {
         if (opts.size !== undefined) {
             dom.css("background-size", opts.size);
         }
+        if (opts.speed !== undefined) {
+            this._speed = opts.speed;
+        }
         this.dom = dom;
         // --- 播放 ---
         this.play();
@@ -52,6 +55,7 @@ class PNGPlayer {
     public play(frame: number = this._posFrame): void {
         if (this._playing === false) {
             this._playing = true;
+            this.onFrame(this._posFrame);
             let speed = this._speed[frame] ? this._speed[frame] : this._speed[0];
             this._posLeft = frame * this._width;
             this.dom.css({"background-position": this._posLeft + "px " + this._posTop + "px"});
@@ -64,13 +68,14 @@ class PNGPlayer {
     private _play(): void {
         if (this._posFrame > this._frames)
             this._posFrame = 0;
+        this.onFrame(this._posFrame);
         let speed = this._speed[this._posFrame] ? this._speed[this._posFrame] : this._speed[0];
         this._posLeft = this._posFrame * this._width;
         this.dom.css({"background-position": this._posLeft + "px " + this._posTop + "px"});
         ++this._posFrame;
         this._posTimer = setTimeout((function(): void {
             this._play();
-        }).bind(this), 100);
+        }).bind(this), speed);
     }
 
     public stop(): void {
@@ -88,6 +93,9 @@ class PNGPlayer {
             this._playing = false;
         }
     }
+
+    // --- 事件 ---
+    public onFrame(frame: number): void {};
 
 }
 

@@ -11,6 +11,8 @@ interface PNGPlayerInstance {
     play(): void;
     stop(): void;
     pause(): void;
+
+    onFrame(frame: number): void;
 }
 
 interface PNGPlayerConstructor {
