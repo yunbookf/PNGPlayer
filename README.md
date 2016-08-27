@@ -4,7 +4,7 @@ Play PNG like GIF.
 
 ```typescript
 let pp: PNGPlayer = new PNGPlayer("#img", {
-    frames: 4
+    frames: 3 // count is 4
 });
 ```
   
