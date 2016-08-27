@@ -1,6 +1,7 @@
 interface PNGPlayerOptions {
     frames: number;
     size?: string;
+    speed?: number[];
 }
 
 interface PNGPlayerInstance {

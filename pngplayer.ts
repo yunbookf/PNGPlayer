@@ -18,6 +18,9 @@ class PNGPlayer {
     // --- 状态 ---
     private _playing: boolean = false;
 
+    // --- 播放速度 ---
+    private _speed: number[] = [100];
+
     // --- 设置位移 ---
     private _row: number = 0;
     get row(): number {
@@ -49,17 +52,19 @@ class PNGPlayer {
     public play(frame: number = this._posFrame): void {
         if (this._playing === false) {
             this._playing = true;
+            let speed = this._speed[frame] ? this._speed[frame] : this._speed[0];
             this._posLeft = frame * this._width;
             this.dom.css({"background-position": this._posLeft + "px " + this._posTop + "px"});
             this._posFrame = frame + 1;
             this._posTimer = setTimeout((function(): void {
                 this._play();
-            }).bind(this), 100);
+            }).bind(this), speed);
         }
     }
     private _play(): void {
         if (this._posFrame > this._frames)
             this._posFrame = 0;
+        let speed = this._speed[this._posFrame] ? this._speed[this._posFrame] : this._speed[0];
         this._posLeft = this._posFrame * this._width;
         this.dom.css({"background-position": this._posLeft + "px " + this._posTop + "px"});
         ++this._posFrame;

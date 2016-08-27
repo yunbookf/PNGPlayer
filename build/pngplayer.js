@@ -5,6 +5,7 @@ var PNGPlayer = (function () {
         this._posFrame = 0;
         this._posTimer = 0;
         this._playing = false;
+        this._speed = [100];
         this._row = 0;
         var dom = $(d);
         this._width = dom.width();
@@ -34,17 +35,19 @@ var PNGPlayer = (function () {
         if (frame === void 0) { frame = this._posFrame; }
         if (this._playing === false) {
             this._playing = true;
+            var speed = this._speed[frame] ? this._speed[frame] : this._speed[0];
             this._posLeft = frame * this._width;
             this.dom.css({ "background-position": this._posLeft + "px " + this._posTop + "px" });
             this._posFrame = frame + 1;
             this._posTimer = setTimeout((function () {
                 this._play();
-            }).bind(this), 100);
+            }).bind(this), speed);
         }
     };
     PNGPlayer.prototype._play = function () {
         if (this._posFrame > this._frames)
             this._posFrame = 0;
+        var speed = this._speed[this._posFrame] ? this._speed[this._posFrame] : this._speed[0];
         this._posLeft = this._posFrame * this._width;
         this.dom.css({ "background-position": this._posLeft + "px " + this._posTop + "px" });
         ++this._posFrame;
